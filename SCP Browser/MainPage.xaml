@@ -5,9 +5,31 @@
     xmlns:local="using:SCP_Browser"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:SCP_Browser.UserControls"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid Background="{StaticResource AppBackGroundBrush}">
+        <StackPanel MaxWidth="800" VerticalAlignment="Center">
+            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="Welcome to the SCP Browser" TextAlignment="Center" />
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="Select the source you wish to browse:" TextAlignment="Center" />
+            <ListView Name="sourcesList">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="Margin" Value="0,4" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Background="#08EDEDFF" MaxWidth="500" Height="128" Padding="20">
+                            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Name}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <Grid Name="popups">
+            <uc:AccessVerification />
+        </Grid>
     </Grid>
 </Page>

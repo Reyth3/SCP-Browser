@@ -11,7 +11,7 @@
     <AssemblyName>SCP Browser</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.14393.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -101,6 +101,9 @@
     <Compile Include="Models\Sources\EnglishSCPSource.cs" />
     <Compile Include="Models\Sources\SCPSourceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\AccessVerification.xaml.cs">
+      <DependentUpon>AccessVerification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\SCPObject.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +113,9 @@
     <None Include="SCP Browser_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\scp-logo.png" />
+    <Content Include="Assets\SFX\progressbar.wav" />
+    <Content Include="Assets\SFX\success.wav" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -127,6 +133,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\AccessVerification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

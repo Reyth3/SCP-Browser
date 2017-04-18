@@ -18,7 +18,7 @@ namespace SCP_Browser.Models.Sources
             Language = "en-us";
         }
 
-        public override async Task<SCPObject> ListObjects()
+        public override async Task<List<SCPObject>> ListObjects()
         {
             var urls = new string[] {
                 "http://www.scp-wiki.net/scp-series",
@@ -36,10 +36,11 @@ namespace SCP_Browser.Models.Sources
                     {
                         var doc = new HtmlDocument();
                         doc.LoadHtml(await res.Content.ReadAsStringAsync());
-                        var list = doc.DocumentNode.Descendants("li").Where(p => p.InnerText.Contains("SCP")).Select(p => new SCPObject(p.Element("a").InnerText.Trim(), WebUtility.HtmlDecode(p.LastChild.InnerText.Replace("-", "").Trim()), p.Element("a").GetAttributeValue("href", "")));
+                        var list = doc.DocumentNode.Descendants("li").Where(p => p.ChildNodes.FirstOrDefault(o => o.Name == "a") != null && p.InnerText.StartsWith("SCP-")).Select(p => new SCPObject(p.Element("a").InnerText.Trim(), WebUtility.HtmlDecode(p.LastChild.InnerText.Replace("-", "").Trim()), p.Element("a").GetAttributeValue("href", "")));
                         scps.AddRange(list);
                     }
             }
+            return scps;
         }
 
         public override async Task LoadHtmlContent(SCPObject scp)

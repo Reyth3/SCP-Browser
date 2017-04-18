@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SCP_Browser.Models.Sources;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,16 @@ namespace SCP_Browser
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            sourcesList.ItemsSource = new SCPSourceBase[]
+            {
+                new EnglishSCPSource(),
+                new EnglishSCPSource(),
+            };
         }
     }
 }
