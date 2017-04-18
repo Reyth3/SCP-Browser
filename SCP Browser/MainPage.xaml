@@ -12,7 +12,7 @@
         <StackPanel MaxWidth="800" VerticalAlignment="Center">
             <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="Welcome to the SCP Browser" TextAlignment="Center" />
             <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="Select the source you wish to browse:" TextAlignment="Center" />
-            <ListView Name="sourcesList">
+            <ListView Name="sourcesList" IsItemClickEnabled="True" ItemClick="SourceClicked">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />

@@ -14,33 +14,35 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace SCP_Browser
+namespace SCP_Browser.View
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class SCPListing : Page
     {
-        public MainPage()
+        public SCPListing()
         {
             this.InitializeComponent();
         }
 
+        SCPSourceBase source;
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            sourcesList.ItemsSource = new SCPSourceBase[]
-            {
-                new EnglishSCPSource(),
-                new EnglishSCPSource(),
-            };
+            source = e.Parameter as SCPSourceBase;
         }
 
-        private void SourceClicked(object sender, ItemClickEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(View.SCPListing), e.ClickedItem);
+            if (source == null)
+                Frame.GoBack();
+            var listing = await source.ListObjects();
+            databaseListing.ItemsSource = listing;
+            pw.IsActive = false;
         }
     }
 }
