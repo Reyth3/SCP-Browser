@@ -12,8 +12,8 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBox Name="filterBox" PlaceholderText="Filter results" Margin="5" />
-        <ListView Name="databaseListing" Grid.Row="1">
+        <TextBox Name="filterBox" PlaceholderText="Filter results" Margin="5" TextChanged="filterBox_TextChanged" />
+        <ListView Name="databaseListing" Grid.Row="1" IsItemClickEnabled="True" ItemClick="ReadContent">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

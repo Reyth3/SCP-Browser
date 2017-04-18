@@ -1,9 +1,11 @@
 ﻿using SCP_Browser.Models.Sources;
+using SCP_Browser.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -29,6 +31,7 @@ namespace SCP_Browser.View
         }
 
         SCPSourceBase source;
+        List<SCPObject> listing;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -40,9 +43,27 @@ namespace SCP_Browser.View
         {
             if (source == null)
                 Frame.GoBack();
-            var listing = await source.ListObjects();
+            listing = await source.ListObjects();
             databaseListing.ItemsSource = listing;
             pw.IsActive = false;
+        }
+
+        private async void filterBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var d = this.Dispatcher;
+            var query = (sender as TextBox).Text.ToLower().Trim();
+            if (query.Length == 0)
+                databaseListing.ItemsSource = listing;
+            else
+            {
+                var filtered = await Task.Run(() => listing.Where(o => o.Id.ToLower().Contains(query) || o.Name.ToLower().Contains(query)));
+                databaseListing.ItemsSource = filtered;
+            }
+        }
+
+        private void ReadContent(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(Reader), e.ClickedItem);
         }
     }
 }

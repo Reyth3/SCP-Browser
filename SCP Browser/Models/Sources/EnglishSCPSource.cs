@@ -36,7 +36,7 @@ namespace SCP_Browser.Models.Sources
                     {
                         var doc = new HtmlDocument();
                         doc.LoadHtml(await res.Content.ReadAsStringAsync());
-                        var list = doc.DocumentNode.Descendants("li").Where(p => p.ChildNodes.FirstOrDefault(o => o.Name == "a") != null && p.InnerText.StartsWith("SCP-")).Select(p => new SCPObject(p.Element("a").InnerText.Trim(), WebUtility.HtmlDecode(p.LastChild.InnerText.Replace("-", "").Trim()), p.Element("a").GetAttributeValue("href", "")));
+                        var list = doc.DocumentNode.Descendants("li").Where(p => p.ChildNodes.FirstOrDefault(o => o.Name == "a") != null && p.InnerText.StartsWith("SCP-")).Select(p => new SCPObject(p.Element("a").InnerText.Trim(), WebUtility.HtmlDecode(p.LastChild.InnerText.Replace("-", "").Trim()), p.Element("a").GetAttributeValue("href", "")) { Source = this });
                         scps.AddRange(list);
                     }
             }
@@ -46,7 +46,7 @@ namespace SCP_Browser.Models.Sources
         public override async Task LoadHtmlContent(SCPObject scp)
         {
             using (var http = new HttpClient())
-            using (var res = await http.GetAsync(scp.Url))
+            using (var res = await http.GetAsync(new Uri(new Uri("http://www.scp-wiki.net/"), scp.Url)))
                 if (res.IsSuccessStatusCode)
                 {
                     var doc = new HtmlDocument();

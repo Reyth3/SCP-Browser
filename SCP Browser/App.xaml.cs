@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -65,6 +66,12 @@ namespace SCP_Browser
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+                SystemNavigationManager.GetForCurrentView().BackRequested += (s, ea) =>
+                {
+                    if ((Window.Current.Content as Frame).CanGoBack)
+                        (Window.Current.Content as Frame).GoBack(); 
+                };
             }
 
             if (e.PrelaunchActivated == false)
